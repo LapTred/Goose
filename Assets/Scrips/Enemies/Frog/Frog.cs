@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Walk : MonoBehaviour
+public class Frog : MonoBehaviour
 {
     public float Speed;
     public float jumpForce;
-    
+
     //-------------------------------//
     public bool betterJump = false;
     public float fallMultiplier = 0.5f;
     public float lowJumpMultiplier = 1f;
     //------------------------------//
 
-    
+
     private Rigidbody2D Rigidbody2D;
     private Animator Animator;
     private float Horizontal;
-    
+
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -26,37 +26,29 @@ public class Walk : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("w") && CheckGround.canJump)
+        if (/*Input.GetKeyDown("w") &&*/ CheckGroundFrog.canJump)
         {
             Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x, jumpForce);
         }
 
-        if (CheckGround.canJump == false)
+        if (CheckGroundFrog.canJump == false)
         {
             Animator.SetBool("Jumping", true);
             Animator.SetBool("Walk", false);
         }
-        if (CheckGround.canJump == true)
+        if (CheckGroundFrog.canJump == true)
         {
             Animator.SetBool("Jumping", false);
             Animator.SetBool("Falling", false);
         }
-        if (Rigidbody2D.velocity.y<0)
+        if (Rigidbody2D.velocity.y < 0)
         {
             Animator.SetBool("Falling", true);
         }
-        else if(Rigidbody2D.velocity.y > 0)
+        else if (Rigidbody2D.velocity.y > 0)
         {
             Animator.SetBool("Falling", false);
-        }
-        if(Input.GetKey("s")&&CheckGround.canJump&&!Input.GetKey("a")&&!Input.GetKey("d"))
-        {
-            Animator.SetBool("Seat", true);
-        }
-        if (!Input.GetKey("s")||!CheckGround.canJump||Input.GetKey("a")||Input.GetKey("d"))
-        {
-            Animator.SetBool("Seat", false);
-        }
+        }        
     }
 
     private void FixedUpdate()
@@ -75,18 +67,18 @@ public class Walk : MonoBehaviour
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
 
-        if(betterJump)
+        if (betterJump)
         {
-            if(Rigidbody2D.velocity.y<0&&Input.GetKey("w"))
-            {                              
-                Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y*(fallMultiplier) * Time.deltaTime;                                
+            if (Rigidbody2D.velocity.y < 0 && Input.GetKey("w"))
+            {
+                Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier) * Time.deltaTime;
             }
             if (Rigidbody2D.velocity.y > 0 && !Input.GetKey("w"))
             {
-                Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y*(lowJumpMultiplier) * Time.deltaTime;
+                Rigidbody2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier) * Time.deltaTime;
             }
-        }              
+        }
 
-        Rigidbody2D.velocity = new Vector2(Horizontal*Speed*Time.deltaTime, Rigidbody2D.velocity.y);
+        Rigidbody2D.velocity = new Vector2(Horizontal * Speed * Time.deltaTime, Rigidbody2D.velocity.y);
     }
 }
