@@ -10,5 +10,15 @@ public class DamageObject : MonoBehaviour
         {
             collision.transform.GetComponent<PlayerRespawn>().PlayerDamaged();
         }
+
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            collision.transform.GetComponent<PlayerRespawn>().PlayerDamaged();
+        }
     }
 }

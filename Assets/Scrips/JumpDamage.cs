@@ -16,11 +16,21 @@ public class JumpDamage : MonoBehaviour
 
     public int lifes = 1;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.transform.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Rigidbody2D>().velocity = (Vector2.up * jumpForce);
+            LosseLifeAndHit();
+            CheckLife();
+        }
+    }*/
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.transform.CompareTag("JumpDamage"))
+        {
+            collision.gameObject.GetComponentInParent<Rigidbody2D>().velocity = (Vector2.up * jumpForce);
             LosseLifeAndHit();
             CheckLife();
         }
